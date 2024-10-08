@@ -6,13 +6,9 @@ var logger = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 const mongoose = require('mongoose');
-// Kết nối đến MongoDB
-// const db = require('./config/db');
 
-// // Connet
-// db.connect();
 
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = "mongodb://localhost:27017/quiz";
 mongoose.connect(MONGO_URL).then(() => {
   console.log("Database is connet")
 })
@@ -26,7 +22,6 @@ const corsOptions = {
 var app = express();
 // Sử dụng middleware CORS
 app.use(cors(corsOptions));
-app.use(cors({ origin: 'http://localhost:5173' }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

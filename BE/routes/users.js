@@ -7,14 +7,25 @@ const { validationResult } = require('express-validator');
 
 const config = require('../config/config');
 const protect = require('../middleware/protect');
+const paginateResults = require('../helper/paginateResults')
 
 
-router.get('/', protect.verifyToken , protect.verifyTokendmin, async function (req, res, next) {
-  let users = await userModel.find({}).exec();
-  ResHelper.ResponseSend(res, true, 200, users)
+router.get('/', async function (req, res, next) {
+  try {
+    const paginatedUsers = await paginateResults(userModel, {}, {
+      page: req.query.page,
+      limit: req.query.limit,
+      sortField: 'createdAt',
+      sortOrder: -1
+    });
+
+    ResHelper.ResponseSend(res, true, 200, paginatedUsers);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/:id', protect.verifyToken,async function (req, res, next) {
+router.get('/:id', async function (req, res, next) {
   try {
     let user = await userModel.find({ _id: req.params.id }).exec();
     ResHelper.RenderRes(res, true, 200, user)

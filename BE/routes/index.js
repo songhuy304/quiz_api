@@ -4,16 +4,9 @@ var router = express.Router();
 
 router.use('/users', require('./users'));
 router.use('/auth', require('./auth'));
-
-
-router.use('/product', require('./product'));
-router.use('/category', require('./category'));
-router.use('/sanpham', require('./sanpham'));
-router.use('/order', require('./order'));
-router.use('/otp', require('./otp'));
-router.use('/invoice', require('./invoiceitem'));
-
-
+router.use('/api/v1/exams', require('./exam'));
+router.use('/api/v1/questions', require('./question'));
+router.use('/api/v1/examResult', require('./examResult'));
 
 
 module.exports = router;
